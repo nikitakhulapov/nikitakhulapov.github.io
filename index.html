@@ -61,7 +61,7 @@
             let barrel = document.createElement("div");
             document.body.appendChild(barrel);
             barrelX = 500;
-            barrelY = Math.floor(Math.random() * (500 - 1)) + 1;
+            barrelY = Math.floor(Math.random() * (480 - 20)) + 20;
             barrel.classList.add("barrel");
             return barrel;
         }
@@ -85,14 +85,20 @@
             // Перемещаем объекты на сцене
             // Помнишь, мы сохраняли ссылку на созданную машинку?
             // Ну так вот теперь с помощщью нее управляем стилями элемента
+            if (barrelX < 0){
+                barrelX = 500;
+                barrelY = Math.floor(Math.random() * (480 - 20)) + 20;
+            }
+            if (playerY + 45 > 500){
+                playerY -= 5;
+            }
+            if (playerY < 0){
+                playerY += 5;
+            }
             player.style.top = playerY + 'px';
             player.style.left = playerX + 'px';
             barrel.style.top = barrelY + "px";
             barrel.style.left = barrelX + "px";
-            if (barrelX < 0){
-                barrelX = 500;
-                barrelY = Math.floor(Math.random() * (500 - 1)) + 1;
-            }
             // после в конце выполнения функции заставим ее поместить
             // саму себя в очередь на выполнение при следующей браузерной перерисовке!
             requestAnimationFrame(game);
