@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        .car {
+            width: 100px;
+            height: 60px;
+            /* картинку машины ты можешь выбрать и подставить любую, там есть несколько вариантов */
+            background: url("red_car.png") no-repeat center;
+            background-size: cover;
+            position: absolute;
+        }
+        .barrel{
+            background: url("barrel.png") no-repeat center;
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            position: absolute;
+        }
+        .screen{
+            width: 500px;
+            height: 500px;
+            border: 3px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="d1" class = "screen">
+
+    </div>
+    <script>
+        "use strict"
+        // Переменные для хранения параметров
+        let playerX;
+        let playerY;
+        let playerDirY;
+        let playerSpeed;
+        let barrelX;
+        let barrelY;
+        function createPlayer() {
+            // создадим элемент DIV
+            let player = document.createElement("div");
+            // добавим к нему класс car
+            player.classList.add("car");
+            // вставим созданный элемент на страницу в конец body
+            document.body.appendChild(player);
+        
+            // Настроим параметры машинки
+            playerX = 40;
+            playerY = 0;
+            playerDirY = 0;
+            playerSpeed = 5;
+
+            // вернем ссылку на добавленный на страницу элемент DIV, чтобы иметь к нему доступ
+            // в дальнейшем
+            return player;
+        }
+        function createBarrel(startX, startY) {
+            let barrel = document.createElement("div");
+            document.body.appendChild(barrel);
+            barrelX = 250;
+            barrelY = 200;
+            barrel.classList.add("barrel");
+            return barrel;
+        }
+        let player = createPlayer();
+        let barrel = createBarrel();
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "ArrowUp"){
+                playerDirY = -1;
+            }
+            if (e.key === "ArrowDown"){
+                playerDirY = 1;
+            }
+        })
+        document.addEventListener("keyup", function(e){
+            playerDirY = 0;
+        })
+        function game() {
+            // Изменяем параметры объектов 
+            playerY += playerDirY * playerSpeed;
+            barrelX -= 5;
+            // Перемещаем объекты на сцене
+            // Помнишь, мы сохраняли ссылку на созданную машинку?
+            // Ну так вот теперь с помощщью нее управляем стилями элемента
+            player.style.top = playerY + 'px';
+            player.style.left = playerX + 'px';
+            barrel.style.top = barrelY + "px";
+            barrel.style.left = barrelX + "px";
+            // после в конце выполнения функции заставим ее поместить
+            // саму себя в очередь на выполнение при следующей браузерной перерисовке!
+            requestAnimationFrame(game);
+        }
+        game();
+        </script>
+</body>
+</html>
