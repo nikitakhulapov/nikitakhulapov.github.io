@@ -60,8 +60,8 @@
         function createBarrel(startX, startY) {
             let barrel = document.createElement("div");
             document.body.appendChild(barrel);
-            barrelX = 250;
-            barrelY = 200;
+            barrelX = 500;
+            barrelY = Math.floor(Math.random() * (500 - 1)) + 1;
             barrel.classList.add("barrel");
             return barrel;
         }
@@ -89,6 +89,10 @@
             player.style.left = playerX + 'px';
             barrel.style.top = barrelY + "px";
             barrel.style.left = barrelX + "px";
+            if (barrelX < 0){
+                barrelX = 500;
+                barrelY = Math.floor(Math.random() * (500 - 1)) + 1;
+            }
             // после в конце выполнения функции заставим ее поместить
             // саму себя в очередь на выполнение при следующей браузерной перерисовке!
             requestAnimationFrame(game);
